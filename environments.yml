@@ -1,6 +1,7 @@
 name: sd_car
 channels:
     - conda-forge
+    - pytorch
 dependencies:
     - python==3.6.9
     - numpy
@@ -9,7 +10,9 @@ dependencies:
     - eventlet
     - flask-socketio
     - tqdm
-    - pytorch torchvision cudatoolkit=10.1 -c pytorch
+    - pytorch 
+    - torchvision
+    - cudatoolkit=10.1
     - pip:
         - opencv-python
         - tensorboard_logger
