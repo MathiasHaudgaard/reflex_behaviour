@@ -61,7 +61,7 @@ def telemetry(sid, data):
         speed = float(data["speed"])
 
         # The current image from the center camera of the car
-        image = Image.open(BytesIO(base64.b64decode(data["img_center"])))
+        image = Image.open(BytesIO(base64.b64decode(data["image"])))
         img = np.asarray(image)
         img = utils.preprocess(img)
         try:
@@ -108,7 +108,7 @@ def connect(sid, environ):
 
 def send_control(steering_angle, throttle):
     sio.emit(
-        "control",
+        "steer",
         data={
             'steering_angle': steering_angle.__str__(),
             'throttle': throttle.__str__()
