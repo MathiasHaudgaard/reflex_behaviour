@@ -1,0 +1,15 @@
+name: sd_car
+channels:
+    - conda-forge
+dependencies:
+    - python==3.6.9
+    - numpy
+    - matplotlib
+    - pillow
+    - eventlet
+    - flask-socketio
+    - tqdm
+    - pytorch torchvision cudatoolkit=10.1 -c pytorch
+    - pip:
+        - opencv-python
+        - tensorboard_logger
