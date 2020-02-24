@@ -28,9 +28,9 @@ class Reflex_CNN(nn.Module):
         input = self.elu(self.conv_2(input))
         input = self.elu(self.conv_3(input))
         input = self.elu(self.conv_4(input))
+        input = self.dropout(input)
 
         input = input.flatten()
-        input = self.dropout(input)
         input = self.elu(self.fc0(input))
         input = self.elu(self.fc1(input))
         input = self.elu(self.fc2(input))

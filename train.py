@@ -17,6 +17,8 @@ from data_extractor import Features
 import utils
 
 import argparse
+from matplotlib import pyplot as plt
+import cv2
 
 
 def train_model(args, model, dataset_train, dataset_val):
@@ -34,14 +36,14 @@ def train_model(args, model, dataset_train, dataset_val):
             data = dataset_train[sample_id]
 
             label = data['steering_angle'] #, data['brake'], data['speed'], data['throttle']
-            img_str, label = utils.choose_image(label)
-
-
-            img = utils.preprocess(data[img_str])
+            img_pth, label = utils.choose_image(label)
+            img = cv2.imread(data[img_pth])
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            img = utils.preprocess(img)
             img, label = utils.random_flip(img, label)
             img, label = utils.random_translate(img, label, 100, 10)
-            #img = utils.random_shadow(img)
-            #img = utils.random_brightness(img)
+            img = utils.random_shadow(img)
+            img = utils.random_brightness(img)
             img = Variable(torch.cuda.FloatTensor([img]))
             label = np.array([label]).astype(float)
             label = Variable(torch.cuda.FloatTensor(label))
@@ -110,8 +112,15 @@ def eval_model(model,dataset,num_samples):
             break
 
         data = dataset[sample_id]
-        img_str, label = utils.choose_image(data['steering_angle'])
-        img = utils.preprocess(data[img_str])
+        img_pth, label = utils.choose_image(data['steering_angle'])
+
+        img = cv2.imread(data[img_pth])
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = utils.preprocess(img)
+        img, label = utils.random_flip(img, label)
+        img, label = utils.random_translate(img, label, 100, 10)
+        img = utils.random_shadow(img)
+        img = utils.random_brightness(img)
         img = Variable(torch.cuda.FloatTensor([img]))
         img = img.permute(0,3,1,2)
         label = np.array([label]).astype(float)

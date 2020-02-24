@@ -26,14 +26,11 @@ class Features(Dataset):
 
     def __getitem__(self,i):
         data_entry = self.csv_data[i]
-        img_center = cv2.imread(data_entry[0])
-        img_left = cv2.imread(data_entry[1])
-        img_right = cv2.imread(data_entry[2])
 
         to_return = {
-            'img_center': img_center,
-            'img_left': img_left,
-            'img_right': img_right,
+            'img_center_pth': data_entry[0],
+            'img_left_pth': data_entry[1],
+            'img_right_pth': data_entry[2],
             'steering_angle': data_entry[3],
             'throttle': data_entry[4],
             'brake': data_entry[5],

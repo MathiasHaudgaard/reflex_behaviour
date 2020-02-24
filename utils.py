@@ -52,10 +52,10 @@ def choose_image(steering_angle):
     """
     choice = np.random.choice(3)
     if choice == 0:
-        return "img_left", float(steering_angle) + 0.2
+        return "img_left_pth", float(steering_angle) + 0.2
     elif choice == 1:
-        return "img_right", float(steering_angle) - 0.2
-    return "img_center", float(steering_angle)
+        return "img_right_pth", float(steering_angle) - 0.2
+    return "img_center_pth", float(steering_angle)
 
 
 def random_flip(image, steering_angle):
