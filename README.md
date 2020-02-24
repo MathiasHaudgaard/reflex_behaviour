@@ -46,9 +46,19 @@ Test one of the models by running the the script:
 
 python drive.py <path to model_weights>
 
+#Example
+python drive.py models/model_50000
+
 ```
 
 You also need to run car simulator in unity in test mode.
+
+## Tips for training and inference
+If you are stuck with a low end computer it's best to run the unity simulator with the lowest resolution. This will make it easier for the unity simulator to apply the steering commands in time before the car will be in another position. This happens since it's an asynchronous client/server relationship between the unity simulator and the ML model.
+
+I collected data by driving around the lake track for 5 rounds. The model_50000, which you can find in the model folder, oversteers a bit but it stays within the track.
+
+Feel free to leave an issue if you're having any problems :-)
 
 ## Credits
 
