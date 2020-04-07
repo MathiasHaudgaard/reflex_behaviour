@@ -39,6 +39,7 @@ sio = socketio.Server()
 app = Flask(__name__)
 #init our model and image array as empty
 model = None
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 prev_image_array = None
 
 #set min/max speed for our autonomous car
@@ -68,7 +69,7 @@ def telemetry(sid, data):
             # from PIL image to numpy array
             #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             # predict the steering angle for the image
-            img = Variable(torch.cuda.FloatTensor([img])).permute(0,3,1,2)
+            img = Variable(torch.FloatTensor([img], device=device)).permute(0,3,1,2)
 
             steering_angle_throttle = model(img)
             #steering_angle = steering_angle_throttle[0].item()
@@ -134,8 +135,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     #load model
-    model = Reflex_CNN().cuda()
-    model.load_state_dict(torch.load(args.model_weights))
+    model = Reflex_CNN().to(device)
+    model.load_state_dict(torch.load(args.model_weights, map_location=device))
     model.eval()
 
     if args.image_folder != '':
